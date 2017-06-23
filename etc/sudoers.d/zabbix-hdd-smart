@@ -1,0 +1,4 @@
+# Allows to sudo zabbix-hdd-smart.sh without password for zabbix
+Cmnd_Alias ZABBIX_HDD_SMART = /usr/local/bin/zabbix-hdd-smart.sh
+zabbix	ALL=(root)	NOPASSWD:ZABBIX_HDD_SMART
+Defaults!ZABBIX_HDD_SMART !syslog
