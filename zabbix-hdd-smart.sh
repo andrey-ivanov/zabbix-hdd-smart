@@ -61,7 +61,7 @@ do
                 fi
             done <<< "$ManualDiscovery"
         fi
-        Disks=$($SMARTCTL_PATH --scan -d sat -d scsi | cut -d' ' -f1,3 | sort | uniq)
+        Disks=$($SMARTCTL_PATH --scan | grep '^/dev/' | cut -d' ' -f1,3 | sort | uniq)
         print_discovery_device_list "$Disks"
         echo -e '\n  ]\n}'
         exit 0
@@ -73,9 +73,9 @@ do
         echo -en '{\n  "data":\n  ['
         Delimiter=""
         if [[ -e "$NVME_PATH" ]]; then
-            Disks=$($NVME_PATH list | grep '/dev/' | cut -d' ' -f1 | sort | uniq)
+            Disks=$($NVME_PATH list | grep '^/dev/' | cut -d' ' -f1 | sort | uniq)
         else
-            Disks=$($SMARTCTL_PATH --scan -d nvme | cut -d' ' -f1,3 | sort | uniq)
+            Disks=$($SMARTCTL_PATH --scan -d nvme | grep '^/dev/' | cut -d' ' -f1,3 | sort | uniq)
         fi
         print_discovery_device_list "$Disks"
         echo -e '\n  ]\n}'
